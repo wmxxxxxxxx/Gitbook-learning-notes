@@ -112,5 +112,42 @@ typedef struct DNode{
 }DNode, *DLinkList;
 ```
 
+插入操作：在p所指的结点之后插入结点\*s
 
+```text
+s->next = p->next;
+s->prior = p;
+p->next->prior = s;
+p->next = s;
+```
+
+删除操作：删除\*p的后继结点\*q
+
+```text
+p->next = q->next;
+q->next->prior = p;
+free(q);
+```
+
+### 3. 循环链表
+
+循环单链表：最后一个结点的指针不指向NULL，而改为指向头结点。常对循环单链表设尾指针而不是头指针，当设尾指针r时，r-&gt;next即为头指针，对于表头和表尾进行操作都只需要O\(1\)的时间复杂度。
+
+循环双链表：头结点的prior指针需要指向尾结点；当循环双链表L为空时，其头结点的prior域和next域都等于L。
+
+### 4. 静态链表
+
+借助数组来描述线性表的链式存储结构，与前面链表不同的时指针next指向的是结点的相对地址。在一些不支持指针的高级语言（如Basic）中是一种巧妙的设计方法。
+
+![&#x9759;&#x6001;&#x94FE;&#x8868;&#x5B58;&#x50A8;&#x793A;&#x610F;&#x56FE;](../.gitbook/assets/c18a7357b7b046c6acf86901a3b1f53e.png)
+
+```text
+#define MaxSize 50
+typedef struct{
+    ElemType data;
+    int next;
+}SLinkList[MaxSize];
+```
+
+## 四、顺序表和链表的比较
 
