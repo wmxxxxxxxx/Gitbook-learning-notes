@@ -149,5 +149,5 @@ typedef struct{
 }SLinkList[MaxSize];
 ```
 
-## 四、顺序表和链表的比较
+
 
