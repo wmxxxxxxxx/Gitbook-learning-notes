@@ -50,3 +50,67 @@ typedef struct{
 
 ### 2. 顺序表上基本操作实现
 
+插入操作：在顺序表L的第 i \(1&lt;=i&lt;=L.length+1\)个位置插入新元素e
+
+```text
+bool ListInsert(SqList &L, int i, ElemType e){
+    if(i<1 || i>L.length+1)
+        return false;
+    if(L.length >= MaxSize)
+        return false;
+    for(j=L.length, j>=i, j--)
+        L.data[j] = L.data[j-1];
+    L.data[i-1] = e;
+    L.length++;
+    return true;
+}
+```
+
+## 三、线性表的链式表示
+
+### 1. 单链表
+
+引入头节点带来的优点：
+
+1. 链表在第一个位置上的操作和在其他位置上的操作一致，无须进行特殊处理
+2. 无论链表是否为空，头指针是指向头节点的非空指针
+
+```text
+typedef struct LNode{
+    ElemType data;        //数据域
+    struct LNode *next;   //指针域
+}LNode, *LinkList;
+```
+
+插入操作：将值为x的新节点插入到单链表的第i个位置上
+
+```text
+//先检查位置的合法性
+p = GetElem(L, i-1);
+s->next = p->next;
+p->next = s;
+```
+
+删除操作：将单链表的第i个节点删除
+
+```text
+//先检查位置的合法性
+p = GetElem(L, i-1);
+q = p->next;
+p->next = q->next;
+free(q);
+```
+
+### 2. 双链表
+
+双链表在插入和删除操作上和单链表有较大不同，因为需对prior指针做出修改。
+
+```text
+typedef struct DNode{
+    ElemType data;
+    struct DNode *prior, *next;
+}DNode, *DLinkList;
+```
+
+
+
