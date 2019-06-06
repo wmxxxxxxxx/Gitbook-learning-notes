@@ -98,3 +98,20 @@ bool GetTop(SqStack S, Elemtype &x){
 
 top0=-1时0号栈为空，top1=MaxSize时1号栈为空；仅当两个栈顶指针相邻（top1-top0=1）时，判断为栈满；当0号栈进栈时top0先加1再赋值，1号栈进栈时top1先减1再赋值。
 
+### 3. 栈的链式存储结构
+
+采用链式存储的栈成为链栈，链栈的有点是便于多个栈共享存储空间和提高效率，且不存在栈满上溢的情况。通常采用单链表实现，并规定所有操作都是在单链表的表头进行。这里规定链栈没有头结点，Lhead指向栈顶元素
+
+![&#x6808;&#x7684;&#x94FE;&#x5F0F;&#x5B58;&#x50A8;](../.gitbook/assets/2-1q2021g31yc.gif)
+
+```text
+typedef struct Linknode{
+    ElemType data;
+    struct Linknode *next;
+} *LiStack
+```
+
+## 二、队列
+
+
+
