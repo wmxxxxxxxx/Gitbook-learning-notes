@@ -162,6 +162,131 @@ typedef struct{
 
 1）牺牲一个单元来区分队空和队满，入队时少用一个队列单元，“队头指针在队尾指针的下一位置作为队满的标识“
 
+* 队满条件：\(Q.rear+1\)%MaxSize==Q.front
+* 队空条件：Q.front==Q.rear==0
+* 队列中元素个数：\(Q.rear+MaxSize-Q.front\)%MaxSize
+
+2）类型中增设表示个数的数据成员。队空的条件为Q.size==0；队满的条件为Q.size==MaxSize
+
+3）类型中增设tag数据成员，以区分是队满还是队空。tag==0时，若因删除导致Q.front==Q.rear则为空队；tag==1时，若因插入导致Q.front==Q.rear则为队满
+
+#### 2.3 循环队列的操作
+
+初始化
+
+```text
+void InitQueue(&Q){
+    Q.front=Q.rear=0;
+}
+```
+
+判队空
+
+```text
+bool isEmpty(Q){
+    if(Q.front==Q.rear) return true;
+    else return false;
+}
+```
+
+入队
+
+```text
+bool EnQueue(SqQueue &Q, ElemType x){
+    if((Q.front+1)%MaxSize==Q.rear) return false;
+    Q.data[Q.rear]=x;
+    Q.rear=(Q.rear+1)%MaxSize;
+    return true;
+}
+```
+
+出队
+
+```text
+bool DeQueue(SqQueue &Q, ElemType &x){
+    if(Q.rear==Q.front) return false;
+    x=Q.data[Q.front];
+    Q.front=(Q.front+1)%MaxSize;
+    return true;
+}
+```
+
+### 3. 队列的链式存储结构
+
+#### 3.1 队列的链式存储
+
+队列的链式表示称为链队列，它实际上是一个同时带有队头指针和队尾指针的单链表
+
+```text
+typedef struct{
+    ElemType data;
+    struct LinkNode *next;
+}LinkNode;
+typedef struct{
+    LinkNode *front, *rear;
+}LinkQueue;
+```
+
+不设头结点的链式队列在操作上往往比较麻烦，因此设计成一个带头结点的单链表
+
+#### 3.2 链式队列的基本操作
+
+初始化
+
+```text
+void InitQueue(&Q){
+    Q.front=Q.rear=(LinkNode*)malloc(sizeof(LinkNode));
+    Q.front->next=Q.rear;
+}
+```
+
+判队空
+
+```text
+bool isEmpty(LinkQueue Q){
+    if(Q.front==Q.rear) return true;
+    else return false;
+}
+```
+
+入队
+
+```text
+void EnQueue(LinkQueue &Q, ElemType x){
+    s=(LinkNode*)malloc(sizeof(LinkNode));
+    s->data=x;
+    s->next=NULL;
+    Q.rear->next=s;
+    Q.rear=s;
+}
+```
+
+出队
+
+```text
+bool DeQueue(LinkQueue &Q, ElemTyoe &x){
+    if(Q.front==Q.rear) return false;
+    p=Q.front->next;
+    x=p->data;
+    Q.front->next=p->next;
+    if(Q.rear==p) Q.rear==Q.front;
+    free(p);
+    return true;
+}
+```
+
+### 4. 双端队列
+
+双端队列是指允许两端都可以进行入队和出队操作的队列，其元素的逻辑结构仍是线性结构
+
+![&#x53CC;&#x7AEF;&#x961F;&#x5217;](../.gitbook/assets/images.png)
+
+输出受限的双端队列：允许在一端进行插入和删除，但是在另一端只允许插入的双端队列
+
+输入受限的双端队列：允许在一端进行插入和删除，但是在另一端只允许删除的双端队列
+
+
+
 
 
 

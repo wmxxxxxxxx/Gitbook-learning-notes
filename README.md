@@ -1,4 +1,4 @@
-# Table of contents
+# Initial page
 
 ## 数据结构
 
