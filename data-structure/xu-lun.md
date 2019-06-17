@@ -31,13 +31,13 @@
 加法规则：
 
 $$
-T(n)=T1(n)+T2(n)=O(f(n))+O(g(n))=O(max(f(n),g(n)))
+T(n)=T_1(n)+T_2(n)=O(f(n))+O(g(n))=O(max(f(n),g(n)))
 $$
 
 乘法规则：
 
 $$
-T(n)=T1(n)*T2(n)=O(f(n))*O(g(n))=O(f(n)*g(n))
+T(n)=T_1(n)*T_2(n)=O(f(n))*O(g(n))=O(f(n)*g(n))
 $$
 
 ### 2. 空间复杂度
