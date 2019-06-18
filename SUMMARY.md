@@ -2,7 +2,7 @@
 
 * [目录](README.md)
 
-## 数据结构
+## 数据结构 <a id="data-structure"></a>
 
 * [绪论](data-structure/xu-lun.md)
 * [线性表](data-structure/chuan.md)

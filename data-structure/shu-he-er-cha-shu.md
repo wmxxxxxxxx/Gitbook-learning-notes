@@ -46,4 +46,112 @@
 
 #### 二叉树的性质
 
-1. 
+1. 非空二叉树上的叶子结点树等于度为2的结点树加1
+2. 非空二叉树上第K层上至多有2^\(k-1\)个结点
+3. 高度为H的二叉树至多有2^h-1个结点
+4. 具有N个（N&gt;0）结点的完全二叉树的高度为
+
+$$
+log_2(N+1)或log_2N+1
+$$
+
+### 2.2 二叉树的存储结构
+
+#### 顺序存储结构
+
+用一组地址连续的存储单元依次从上而下、从左至右存储完全二叉树上的结点元素。但对于一般的二叉树，为了让数组下标能反映二叉树中结点之间的逻辑关系，只能添加一些并不存在的空结点让其每个结点与完全二叉树上的结点相对照，再存储到一维数组的相应分量中
+
+#### 链式存储结构
+
+```text
+typedef struct BiTNode{
+    ElemType data;
+    struct BiTNode *lchild, *rchild;
+}BiTNode, *BiTree;
+```
+
+## 三、二叉树的遍历和线索二叉树
+
+### 3.1 二叉树的遍历
+
+#### 先序遍历
+
+```text
+void PreOrder(BiTree T){
+    if(T!=NULL){
+        vistit(T);            //访问根结点
+        PreOrder(T->lchild);  //递归遍历左子树
+        PreOrder(T->rchild);  //递归遍历右子树
+    }
+}
+```
+
+#### 中序遍历
+
+```text
+void InOrder(BiTree T){
+    if(T!=NULL){
+        InOrder(T->lchild);  //递归遍历左子树
+        visit(T);            //访问根结点
+        InOrder(T->rchild);  //递归遍历右子树
+    }
+}
+```
+
+#### 后序遍历
+
+```text
+void PostOrder(BiTree T){
+    if(T!=NULL){
+        PostOrder(T->rchild);
+        PostOrder(T->lchild);
+        visit(T);
+    }
+}
+```
+
+不管采用哪种遍历算法，每个结点都有且访问依次，故时间复杂度都为O\(n\)。在最坏情况下，二叉树是有n个结点且深度为n的单支树，遍历算法空间复杂度为O\(n\)。
+
+#### 递归算法和非递归算法的转换
+
+借助栈，将二叉树的递归算法转换为非递归算法，下面以中序遍历为例。先扫描（非访问）根结点的所有做结点并将它们一一入栈。然后出栈一个结点\*p（无左孩子或左孩子均已访问过），则访问它。然后扫描该结点的右孩子结点，进栈，再扫描右孩子结点的左结点并入栈，直至栈空
+
+```text
+void InOrder2(BiTree T){
+    InitStack(S);
+    BiTree p=T;
+    while(p||!IsEmpty(S)){
+        if(p){                //根指针进栈，遍历左子树
+            Push(p, S);
+            p=p->lchild;
+        }else{                //根指针退栈，访问根结点，遍历右子树
+            Pop(S, p);
+            visit(p);
+            p=p->rchild;      //向右子树走
+        }
+    }
+}
+```
+
+显然非递归算法的执行效率高于递归算法
+
+#### 层次遍历
+
+要进行层次遍历需要借助一个队列。先将二叉树根结点入队，然后出队，访问该结点，然后将左右子树根结点入队（如果有），然后出队，直至队列为空
+
+```text
+void LevelOrder(BiTree T){
+    InitQueue(Q);
+    BiTree p;
+    EnQueue(Q, T);
+    while(!IsEmpty(Q)){
+        DeQueue(Q, p);
+        visit(p);
+        if(p->lchild!=NULL)
+            EnQueue(Q, p->lchild);
+        if(p->rchild!=NULL)
+            EnQueue(Q, p->rchild);
+    }
+}
+```
+
