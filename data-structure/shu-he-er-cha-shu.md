@@ -155,3 +155,48 @@ void LevelOrder(BiTree T){
 }
 ```
 
+#### 由遍历序列构造二叉树
+
+由二叉树的先序序列和中序序列可以唯一地确定一棵二叉树：
+
+```text
+BiTree create(int preL, int preR, int inL, int inR){
+    if()
+        return NULL;
+    BiTNode root = (BiTNode*)malloc(sizeof(BiTNode));
+    root->data = pre[preL];
+    for(int i=inL, i<=inR, i++){
+        if(in[i]==pre[preL]) break;
+    }
+    int num = i-inL;
+    root->lchild = create(preL+1, preL+num, inL, i-1);
+    root->rchild = create(preL+num+1, preR, i+1, inR);
+}
+```
+
+⚠️ 如果只知道二叉树的先序序列和后序序列，则无法唯一确定一棵二叉树
+
+### 3.2 线索二叉树
+
+#### 线索二叉树的基本概念
+
+引入线索二叉树是为了加快查找结点前驱和后继的速度。在二叉树线索化时，通常规定：若无左子树，令lchild指向其前驱结点；若无右子树，令rchild指向其后继结点。还需要添加两个标识域表明当前指针域所指对象是指向左（右）子结点还是直接前驱（后继）
+
+![](../.gitbook/assets/img_1426-20190619-210231.jpg)
+
+```text
+typedef struct ThreadNode{
+    ElemType data;
+    struct ThreadNode *lchild, *rchild;
+    int ltag, rtag;
+}ThreadNode, *ThreadTree;
+```
+
+以这种结点结构构成的二叉链表作为二叉树的存储结构，叫做线索链表，其中指向结点前驱和后继的指针，叫做线索。加上线索的二叉树称为线索二叉树。对二叉树以某种次序遍历使其变为线索二叉树的过程叫做线索化
+
+#### 线索二叉树的构造
+
+对二叉树的线索化，实质上就是遍历一次二叉树。在过程中检查当前结点左右指针域是否为空，若为空，将它们改为指向前驱结点或后继结点的线索
+
+
+
