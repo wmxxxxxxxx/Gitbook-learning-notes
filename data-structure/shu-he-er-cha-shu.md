@@ -198,5 +198,68 @@ typedef struct ThreadNode{
 
 对二叉树的线索化，实质上就是遍历一次二叉树。在过程中检查当前结点左右指针域是否为空，若为空，将它们改为指向前驱结点或后继结点的线索
 
+通过中序遍历对二叉树线索化的递归算法如下：
+
+```text
+void InThread(ThreadTree &p, ThreadTree &pre){
+//中序遍历对二叉树线索化的递归算法
+    if(p!=NULL){
+        InThread(p->lchild, pre);
+        if(p->lchild==NULL){
+            p->lchild=pre;
+            p->ltag=1;
+        }
+        if(pre!=NULL&&pre->rchild==NULL){
+            pre->rchild=p;
+            pre->rtag=1;
+        }
+        pre=p;
+        InThread(p->rchild, pre);
+    }
+}
+```
+
+通过中序遍历穿件中序线索二叉树的主过程算法如下：
+
+```text
+void CreateInThread(ThreadTree T){
+    ThreadTree pre = NULL;
+    if(T!=NULL){
+        InThread(T, pre);
+        pre->rchild=NULL;
+        pre->rtag=1;
+    }
+}
+```
+
+#### 线索二叉树的遍历
+
+求中序线索二叉树中中序序列的第一个结点
+
+```text
+ThreadNode *Firstnode(ThreadNode *p){
+    while(p->ltag==0) p=p->lchild;
+    return p;
+}
+```
+
+求中序线索二叉树中结点p在中序序列下的后继结点
+
+```text
+ThreadNode *Nextnode(ThreadNode *p){
+    if(p->rtag==0) return Firstnode(p->rchild);
+    else return p->rchild;
+}
+```
+
+不含头结点的中序线索二叉树的中序遍历算法
+
+```text
+void Inorder(ThreadNode *T){
+    for(ThreadNode *p=Firstnode(T); p!=NULL; p=Nextnode(p))
+        visit(p);
+}
+```
+
 
 
