@@ -371,3 +371,75 @@ void Union(int S[], int Root1, int Root2){
 }
 ```
 
+## 五、树与二叉树的应用
+
+### 5.1 二叉排序树
+
+#### 定义
+
+二叉排序树是一棵空树，或者是一棵具有下列特性的非空二叉树：
+
+1. 若左子树非空，则左子树上所有结点关键字均小于根结点的关键字值
+2. 若右子树非空，则右子树上所有结点关键字均大于根结点的关键字值
+3. 左、右子树本身也分别是一棵二叉排序树
+
+因此，对二叉排序树进行中序遍历，可以得到一个递增的有序序列
+
+#### 查找
+
+```text
+BSTNode *BST_Search(BiTree T, ElemType key, BTSNode *p){
+    p=NULL;
+    while(T!=NULL&&key!=T->data){
+        p=T; //p指向被查找结点的双亲，用于插入和删除操作中
+        if(key<T->data) T=T->lchild;
+        else T=T->rchild;
+    }
+    return T;
+}
+```
+
+#### 插入
+
+```text
+int BST_Insert(BiTree &T, KeyType k){
+    if(T==NULL){
+        T=(BiTree)malloc(sizeof(BiTree));
+        T->key=k;
+        T->lchild=T->rchild=NULL;
+        return 1;
+    }
+    else if(k==T->key)
+        return 0;
+    else if(k<T->key)
+        return BST_Insert(T->lchild, k);
+    else
+        return BST_Insert(T->rchild, k);
+}
+```
+
+#### 构造
+
+```text
+void BST_Create(BiTree &T, KeyType str[], int n){
+    T=NULL;
+    int i=0;
+    while(i<n){
+        BST_Insert(T, str[i]);
+        i++;
+    }
+}
+```
+
+#### 删除
+
+删除操作的实现过程按3种情况来处理：
+
+1. 如果被删结点z是叶结点，则直接删除
+2. 若结点z只有一棵左子树或右子树，则让z的子树称为z父结点的子树，替代z的位置
+3. 若结点z有左、右两棵子树，则令z的直接后继（或直接前驱）替代z，然后从二叉排序树中删去这个直接后继（或直接前驱），这样就转换成了第一或第二种情况
+
+![](../.gitbook/assets/er-cha-pai-xu-shu-shan-chu-cao-zuo-de-4-zhong-qing-kuang.png)
+
+#### 
+
