@@ -441,7 +441,7 @@ void BST_Create(BiTree &T, KeyType str[], int n){
 
 ![](../.gitbook/assets/er-cha-pai-xu-shu-shan-chu-cao-zuo-de-4-zhong-qing-kuang.png)
 
-### 4.5.2 平衡二叉树
+### 5.2 平衡二叉树
 
 #### 定义
 
@@ -461,7 +461,7 @@ void BST_Create(BiTree &T, KeyType str[], int n){
 
 含有n个结点平衡二叉树的最大深度为O\(log2n\)，因此平均查找长度为O\(log2n\)
 
-## 4.5.3 哈夫曼树和哈夫曼编码
+### 5.3 哈夫曼树和哈夫曼编码
 
 #### 定义
 
