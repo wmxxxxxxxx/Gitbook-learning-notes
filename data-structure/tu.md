@@ -141,6 +141,37 @@ typedef struct{
 * Get\_edge\_value\(G, x, y\)：获取图G中边\(x, y\)或&lt;x, y&gt;对应的权值
 * Set\_edge\_value\(G, x, y, v\)：设置图G中边\(x, y\)或&lt;x, y&gt;对应的权值为v
 
+## 三、图的遍历
+
+### 3.1 广度优先搜索—BFS
+
+广度优先搜索是一种分层查找过程，每向前走一步可能访问一批顶点。为了实现逐层的访问，算法必须借助一个辅助队列，以记忆正在访问的顶点的下一层顶点
+
+```text
+bool visited[MAX_VERTEX_NUM];
+void BFSTraverse(Graph G){
+    for(i=0; i<G.vexnum; i++)
+        visited[i]=FALSE;
+    InitQueue(Q);
+    for(i=0; i<G.vexnum; i++)
+        if(!visited[i])    BFS(G, i);
+}
+void BFS(Graph G, int v){
+    visit(v);
+    visited[v]=TRUE;
+    EnQueue(Q, v);
+    while(!isEmpty(Q)){
+        DeQueue(Q, v);
+        for(w=FirstNeighbor(G, v); w>=0; w=NextNeighbor(G, v, w))
+            if(!visited[w]){
+                visit(w);
+                visited[w]=TRUE;
+                EnQueue(Q, w);
+            }
+    }
+}
+```
+
 
 
 
