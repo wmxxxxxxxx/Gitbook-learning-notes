@@ -280,8 +280,6 @@ void Prim(G, T){
 }
 ```
 
-![](../.gitbook/assets/ping-mu-kuai-zhao-20190723-xia-wu-11.24.37.png)
-
 #### 克鲁卡尔（Kruskal）算法
 
 ![](../.gitbook/assets/ping-mu-kuai-zhao-20190723-xia-wu-11.29.29.png)
