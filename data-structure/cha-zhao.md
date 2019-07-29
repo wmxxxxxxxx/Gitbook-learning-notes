@@ -13,3 +13,57 @@
 5. 关键字：数据元素中唯一标识该元素的某个数据项的值，查找结构应该是唯一的
 6. 平均查找长度：一次查找长度是指需要比较的关键字的次数，平均查找长度是所有查找过程中进行关键字的比较次数的平均值
 
+## 二、顺序查找和折半查找
+
+### 2.1 顺序查找
+
+#### 一般线性表的顺序查找
+
+基本思想是从线性表的一端开始，逐个检查关键字是否满足给定的条件
+
+```text
+typedef struct{
+    ElemType *elem;
+    int      TableLenl
+}SSTable
+int Search_Seq(SSTable ST, ElemType key){
+    ST.elem[0]=key;
+    for(i=ST.TableLen;ST.elem[i]!=key;--i);
+    return i;
+}
+```
+
+将ST.elem\[0\]称为哨兵，作用是使得for内的循环不必判断数组是否会越界
+
+#### 有序表的顺序查找
+
+如果在查找前就知道表是按关键字有序的，那么当查找失败时可以不用再比较到表的另一端就能返回查找失败的信息，能降低顺序查找失败的平均查找长度
+
+### 2.2 折半查找
+
+基本思路：首先将给定值key与表中中间位置元素的关键字比较，若相等则查找成功，返回该元素的位置；若不等，则所需查找的元素只能在中间元素以外的前半部分或后半部分中
+
+```text
+int Binary_Search(SeqList L, ElemType key){
+    int low=0,high=L.TableLen-1,mid;
+    while(low<=high){
+        mid=(low+high)/2;
+        if(L.elem[mid]==key)
+            return mid;
+        else if(L.elem[mid]>key)
+            low=mid+1;
+        else
+            high=mid-1;
+    }
+    return -1;
+}
+```
+
+![](../.gitbook/assets/151134_mzws_658658.png)
+
+### 2.3 分块查找
+
+基本思想：将查找表分为若干个子块，块内的元素可以乌苏，但块之间是有序的。再建立一个索引表，索引表中的每个元素含有各块的最大关键字和各块中第一个元素的地址，索引表按关键字有序排列。过程第一步在索引表中确定待查记录所在块，可以顺序查找或折半查找索引表；第二部在块内顺序查找
+
+![](../.gitbook/assets/2-1g01610424a16.png)
+
